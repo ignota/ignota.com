@@ -1,0 +1,111 @@
+image: alpine:3.8
+stages:
+  - build
+  - deploy
+variables:
+  REPOSITORY_NAME: ignota.com
+  CONTAINER_IMAGE: 474766710609.dkr.ecr.us-east-2.amazonaws.com/$REPOSITORY_NAME
+build-docker-production:
+  image: docker:latest
+  services:
+    - docker:dind
+  stage: build
+  script:
+    - apk add --no-cache python py2-pip && pip install awscli
+    - eval $(aws ecr get-login --no-include-email --region=$AWS_DEFAULT_REGION)
+    - |
+      if aws --region=$AWS_DEFAULT_REGION ecr describe-images --repository-name=$REPOSITORY_NAME --image-ids=imageTag=$CI_COMMIT_REF_SLUG > /dev/null 2>&1; then
+        docker pull ${CONTAINER_IMAGE}:${CI_COMMIT_REF_SLUG}
+      fi
+    - |
+      if aws --region=$AWS_DEFAULT_REGION ecr describe-images --repository-name=$REPOSITORY_NAME --image-ids=imageTag=$CI_COMMIT_REF_SLUG > /dev/null 2>&1; then
+        docker build \
+          --cache-from=${CONTAINER_IMAGE}:${CI_COMMIT_REF_SLUG} \
+          --tag=${CONTAINER_IMAGE}:${CI_COMMIT_REF_SLUG} \
+          --tag=${CONTAINER_IMAGE}:${CI_PIPELINE_ID} \
+          --tag=${CONTAINER_IMAGE}:latest \
+          .
+      else
+        docker build \
+          --tag=${CONTAINER_IMAGE}:${CI_COMMIT_REF_SLUG} \
+          --tag=${CONTAINER_IMAGE}:${CI_PIPELINE_ID} \
+          --tag=${CONTAINER_IMAGE}:latest \
+          .
+      fi
+    - docker push ${CONTAINER_IMAGE}
+  only:
+    - master
+build-docker-staging:
+  image: docker:latest
+  services:
+    - docker:dind
+  stage: build
+  script:
+    - apk add --no-cache python py2-pip && pip install awscli
+    - eval $(aws ecr get-login --no-include-email --region=$AWS_DEFAULT_REGION)
+    - |
+      if aws --region=$AWS_DEFAULT_REGION ecr describe-images --repository-name=$REPOSITORY_NAME --image-ids=imageTag=$CI_COMMIT_REF_SLUG > /dev/null 2>&1; then
+        docker pull ${CONTAINER_IMAGE}:${CI_COMMIT_REF_SLUG}
+      fi
+    - |
+      if aws --region=$AWS_DEFAULT_REGION ecr describe-images --repository-name=$REPOSITORY_NAME --image-ids=imageTag=$CI_COMMIT_REF_SLUG > /dev/null 2>&1; then
+        docker build \
+          --cache-from=${CONTAINER_IMAGE}:${CI_COMMIT_REF_SLUG} \
+          --tag=${CONTAINER_IMAGE}:${CI_COMMIT_REF_SLUG} \
+          --tag=${CONTAINER_IMAGE}:${CI_PIPELINE_ID} \
+          --tag=${CONTAINER_IMAGE}:latest \
+          --file=Dockerfile.staging \
+          .
+      else
+        docker build \
+          --tag=${CONTAINER_IMAGE}:${CI_COMMIT_REF_SLUG} \
+          --tag=${CONTAINER_IMAGE}:${CI_PIPELINE_ID} \
+          --tag=${CONTAINER_IMAGE}:latest \
+          --file=Dockerfile.staging \
+          .
+      fi
+    - docker push ${CONTAINER_IMAGE}
+  only:
+    - staging
+build-chart:
+  stage: build
+  script:
+    - apk add --no-cache wget ca-certificates git
+    - wget https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz
+    - tar xzf helm-v2.11.0-linux-amd64.tar.gz && mv linux-amd64/helm /bin
+    - helm init --client-only
+    - helm plugin install https://github.com/chartmuseum/helm-push
+    - helm repo add grimoire https://grimoire.ignota.cloud --username=hildegard --password=ordovirtutum
+    - helm push config/helm/ignota --version=1.0.0-${CI_COMMIT_REF_SLUG}+${CI_PIPELINE_ID} grimoire
+deploy-production:
+  stage: deploy
+  script:
+    - apk add --no-cache wget ca-certificates git
+    - wget https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz
+    - tar xzf helm-v2.11.0-linux-amd64.tar.gz && mv linux-amd64/helm /bin
+    - wget https://dl.k8s.io/v1.13.0-rc.2/kubernetes-client-linux-amd64.tar.gz
+    - tar xzf kubernetes-client-linux-amd64.tar.gz && mv kubernetes/client/bin/kubectl /bin
+    - wget -O /bin/aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/0.4.0-alpha.1/aws-iam-authenticator_0.4.0-alpha.1_linux_amd64 && chmod +x /bin/aws-iam-authenticator
+    - mkdir -p ~/.kube && cp secrets/kubeconfig ~/.kube/config
+    - helm init --client-only
+    - helm repo add grimoire https://grimoire.ignota.cloud --username=hildegard --password=ordovirtutum
+    - cd config/helm/ignota && helm dep update && cd -
+    - helm upgrade ignota-production ./config/helm/ignota --install --namespace=production --set-string=image.tag=$CI_PIPELINE_ID --set-string=hostname=ignota.com
+  only:
+    - master
+deploy-staging:
+  stage: deploy
+  script:
+    - apk add --no-cache wget ca-certificates git
+    - wget https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz
+    - tar xzf helm-v2.11.0-linux-amd64.tar.gz && mv linux-amd64/helm /bin
+    - wget https://dl.k8s.io/v1.13.0-rc.2/kubernetes-client-linux-amd64.tar.gz
+    - tar xzf kubernetes-client-linux-amd64.tar.gz && mv kubernetes/client/bin/kubectl /bin
+    - wget -O /bin/aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/0.4.0-alpha.1/aws-iam-authenticator_0.4.0-alpha.1_linux_amd64 && chmod +x /bin/aws-iam-authenticator
+    - mkdir -p ~/.kube && cp secrets/kubeconfig ~/.kube/config
+    - helm init --client-only
+    - helm repo add grimoire https://grimoire.ignota.cloud --username=hildegard --password=ordovirtutum
+    - cd config/helm/ignota && helm dep update && cd -
+    - helm upgrade ignota-staging ./config/helm/ignota --install --namespace=staging --set-string=image.tag=$CI_PIPELINE_ID --set-string=hostname=ignota.fyi
+  only:
+    - staging

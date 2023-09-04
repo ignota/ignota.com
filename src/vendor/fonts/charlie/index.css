@@ -1,0 +1,127 @@
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: normal;
+  font-weight: 100;
+  src: url('./CharliePro-Hairline.woff2') format('woff2'),
+       url('./CharliePro-Hairline.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: italic;
+  font-weight: 100;
+  src: url('./CharliePro-HairlineItalic.woff2') format('woff2'),
+       url('./CharliePro-HairlineItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: normal;
+  font-weight: 200;
+  src: url('./CharliePro-Thin.woff2') format('woff2'),
+       url('./CharliePro-Thin.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: italic;
+  font-weight: 200;
+  src: url('./CharliePro-ThinItalic.woff2') format('woff2'),
+       url('./CharliePro-ThinItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: normal;
+  font-weight: 300;
+  src: url('./CharliePro-Light.woff2') format('woff2'),
+       url('./CharliePro-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: italic;
+  font-weight: 300;
+  src: url('./CharliePro-LightItalic.woff2') format('woff2'),
+       url('./CharliePro-LightItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./CharliePro-Regular.woff2') format('woff2'),
+       url('./CharliePro-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: italic;
+  font-weight: 400;
+  src: url('./CharliePro-RegularItalic.woff2') format('woff2'),
+       url('./CharliePro-RegularItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: normal;
+  font-weight: 500;
+  src: url('./CharliePro-Medium.woff2') format('woff2'),
+       url('./CharliePro-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: italic;
+  font-weight: 500;
+  src: url('./CharliePro-MediumItalic.woff2') format('woff2'),
+       url('./CharliePro-MediumItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: normal;
+  font-weight: 600;
+  src: url('./CharliePro-Semibold.woff2') format('woff2'),
+       url('./CharliePro-Semibold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: italic;
+  font-weight: 600;
+  src: url('./CharliePro-SemiboldItalic.woff2') format('woff2'),
+       url('./CharliePro-SemiboldItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./CharliePro-Bold.woff2') format('woff2'),
+       url('./CharliePro-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: italic;
+  font-weight: 700;
+  src: url('./CharliePro-BoldItalic.woff2') format('woff2'),
+       url('./CharliePro-BoldItalic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: normal;
+  font-weight: 800;
+  src: url('./CharliePro-Black.woff2') format('woff2'),
+       url('./CharliePro-Black.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Charlie Pro';
+  font-style: italic;
+  font-weight: 800;
+  src: url('./CharliePro-BlackItalic.woff2') format('woff2'),
+       url('./CharliePro-BlackItalic.woff') format('woff');
+}

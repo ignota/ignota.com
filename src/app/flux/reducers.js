@@ -1,0 +1,6 @@
+export { reducer as authors } from './authors'
+export { reducer as posts } from './posts'
+export { reducer as profiles } from './profiles'
+export { reducer as social } from './social'
+export { reducer as tags } from './tags'
+export { reducer as users } from './users'

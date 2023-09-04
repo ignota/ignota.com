@@ -1,0 +1,21 @@
+# syntax = docker/dockerfile:experimental
+
+# ------------------------------ BUILD CONTAINER -------------------------------
+FROM 960449334981.dkr.ecr.us-east-1.amazonaws.com/jutta:latest AS webpack
+
+WORKDIR /usr/src/ignota.com
+
+COPY package.json yarn.lock /usr/src/ignota.com/
+
+RUN --mount=type=cache,target=/tmp/yarn-cache \
+  yarn install --cache-folder=/tmp/yarn-cache
+
+COPY . /usr/src/ignota.com
+
+COPY config/nginx/nginx.staging.conf /etc/nginx/sites-enabled/ignota.conf
+
+RUN . secrets/aws.sh && yarn build:staging
+
+EXPOSE 80
+
+CMD ["passenger", "start", "dist", "--environment=staging", "--port=80"]

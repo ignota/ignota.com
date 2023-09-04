@@ -1,0 +1,27 @@
+/*               ;.
+**           .:OWMMX:
+**         c0MMMMMMMM0
+**      ,OMXc. 'KMMMMMX.
+**    :XMX,      KMMMMMN.
+**  .KMMMx       lMMMMMMK
+**  kMMMMMO.    .XMMMMMMM:
+**  'WMMMMMWx;,dWMOdWMMMM0
+**   .XMMMMMMMMWd.  0MMMMX
+**     kMMMMKd,     OMMMM0            ,a8a,
+**    .XMMN'        KMMMMc           ,8" "8,                                       I8
+**    XMMM,         WMMM0            d8   8b                                       I8
+**   xMMMM.        :MMMK             88   88                                    88888888
+**   WMMMM;       .NMMO              88   88                                       I8
+**   MMMMMO      :WMKc               Y8   8P   ,gggg,gg   ,ggg,,ggg,     ,ggggg,   I8     ,gggg,gg
+**   KMMMMM'   '0MK,                 `8, ,8'  dP"  "Y8I  ,8" "8P" "8,   dP"  "Y8gggI8    dP"  "Y8I
+**   ;MMMMMX.'OMX;              8888  "8,8"  i8'    ,8I  I8   8I   8I  i8'    ,8I ,I8,  i8'    ,8I
+**    xMMMMMMMWl         .l0l   `8b,  ,d8b, ,d8,   ,d8I ,dP   8I   Yb,,d8,   ,d8',d88b,,d8,   ,d8b,
+**     kMMMMMMx.       .kWO'      "Y88P" "Y8P"Y8888P"8888P'   8I   `Y8P"Y8888P"  8P""Y8P"Y8888P"`Y8
+**      lWMMMMMMk,  .cKWd.                         ,d8I'
+**       .0MMMMMMMMWM0:                          ,dP'8I
+**         'kNMMMW0l.                           ,8"  8I   (c) 2019 The Ignota Media Corporation
+**             ..                               I8   8I     All rights emphatically reserved.
+**                                              `8, ,8I
+**                                               `Y8P"
+**
+*/
